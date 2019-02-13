@@ -99,6 +99,7 @@ void initRTOSObjects() {
 	xTaskCreate(taskTX_DCAN, "TX CAN DCAN", 256, NULL, 1, NULL);
 	xTaskCreate(taskTX_VCAN, "TX CAN VCAN", 256, NULL, 1, NULL);
 	xTaskCreate(taskRXCANProcess, "RX CAN", 256, NULL, 1, NULL);
+	xTaskCreate(task_main, "main loop", 256, NULL, 1, NULL);
 }
 /* USER CODE END 0 */
 

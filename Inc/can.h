@@ -13,6 +13,8 @@
 #include "stm32f4xx_hal.h"
 #include "cmsis_os.h"
 
+#define ID_BLANK 0x200
+
 typedef struct
 {
   uint32_t StdId;    /*!< Specifies the standard identifier.
@@ -71,6 +73,7 @@ void VCANFilterConfig();
 void taskRXCANProcess();
 void taskTX_DCAN();
 void taskTX_VCAN();
+void task_main();
 
 extern CAN_HandleTypeDef hcan1;
 extern CAN_HandleTypeDef hcan2;

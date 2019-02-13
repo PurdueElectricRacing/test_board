@@ -110,15 +110,31 @@ void taskRXCANProcess()
 	CanRxMsgTypeDef rx;  //CanRxMsgTypeDef to be received on the queue
 	while (1)
 	{
-		HAL_GPIO_TogglePin(LD4_GPIO_Port, LD4_Pin);
 		//if there is a CanRxMsgTypeDef in the queue, pop it, and store in rx
 		if (xQueueReceive(q_rx_dcan, &rx, portMAX_DELAY) == pdTRUE)
 		{
+			HAL_GPIO_TogglePin(LD4_GPIO_Port, LD4_Pin);
 			//A CAN message has been recieved
 			//check what kind of message we received
 			switch (rx.StdId)
 			{
+			case ID_BLANK:
+				//process
+				break;
+			default:
+				break;
 			}
 		}
+	}
+}
+
+void task_main() {
+
+	while (1) {
+		HAL_GPIO_TogglePin(LD6_GPIO_Port, LD6_Pin);
+
+		//main loop
+
+		vTaskDelay(500);
 	}
 }
