@@ -14,6 +14,8 @@
 #include "cmsis_os.h"
 
 #define ID_BLANK 0x200
+#define ID_MODE 0x610
+#define ID_VOLT 0x605
 
 typedef struct
 {

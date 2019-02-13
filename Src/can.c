@@ -6,8 +6,7 @@
  */
 #include "can.h"
 
-#define ID_MODE 0x610
-#define ID_VOLT 0x605
+
 int mode = 0;
 
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
@@ -35,8 +34,8 @@ void DCANFilterConfig()
 	  CAN_FilterTypeDef FilterConf;
 	  FilterConf.FilterIdHigh =         0x400 << 5; // 2 num
 	  FilterConf.FilterIdLow =          0x401 << 5; // 0
-	  FilterConf.FilterMaskIdHigh =     0x7ff;       // 3
-	  FilterConf.FilterMaskIdLow =      0x7fe;       // 1
+	  FilterConf.FilterMaskIdHigh =     0x610 << 5;       // 3
+	  FilterConf.FilterMaskIdLow =      0x501 << 5;       // 1
 	  FilterConf.FilterFIFOAssignment = CAN_FilterFIFO0;
 	  FilterConf.FilterBank = 0;
 	  FilterConf.FilterMode = CAN_FILTERMODE_IDLIST;
@@ -47,12 +46,10 @@ void DCANFilterConfig()
 
 void VCANFilterConfig()
 {
-
-
 	  CAN_FilterTypeDef FilterConf;
 	  FilterConf.FilterIdHigh =         0x501 << 5; // 2 num
 	  FilterConf.FilterIdLow =          0x201 << 5; // 0
-	  FilterConf.FilterMaskIdHigh =     0x7ff;       // 3
+	  FilterConf.FilterMaskIdHigh =     0x610 << 5;       // 3
 	  FilterConf.FilterMaskIdLow =      0x7ff;       // 1
 	  FilterConf.FilterFIFOAssignment = CAN_FilterFIFO1;
 	  FilterConf.FilterBank = 1;
@@ -146,7 +143,7 @@ void task_main() {
 			tx.DLC = 1;
 			tx.RTR = CAN_RTR_DATA;
 			tx.Data[0] = i++;
-			xQueueSendToFront(car.q_tx_dcan, &tx, 100); //higher priority than polling
+			xQueueSendToFront(q_tx_dcan, &tx, 100); //higher priority than polling
 			HAL_GPIO_TogglePin(LD5_GPIO_Port, LD5_Pin);
 		}
 		//main loop
@@ -170,4 +167,5 @@ void process(CanRxMsgTypeDef* rx) {
 		return;
 	}
 	//idle
+	mode = 0;
 }

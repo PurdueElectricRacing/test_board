@@ -117,6 +117,10 @@ void Error_Handler(void);
 #define BOOT1_GPIO_Port GPIOB
 #define CLK_IN_Pin GPIO_PIN_10
 #define CLK_IN_GPIO_Port GPIOB
+#define VCAN_RX_Pin GPIO_PIN_12
+#define VCAN_RX_GPIO_Port GPIOB
+#define VCAN_TX_Pin GPIO_PIN_13
+#define VCAN_TX_GPIO_Port GPIOB
 #define LD4_Pin GPIO_PIN_12
 #define LD4_GPIO_Port GPIOD
 #define LD3_Pin GPIO_PIN_13
@@ -143,6 +147,10 @@ void Error_Handler(void);
 #define I2S3_SCK_GPIO_Port GPIOC
 #define I2S3_SD_Pin GPIO_PIN_12
 #define I2S3_SD_GPIO_Port GPIOC
+#define DCAN_RX_Pin GPIO_PIN_0
+#define DCAN_RX_GPIO_Port GPIOD
+#define DCAN_TX_Pin GPIO_PIN_1
+#define DCAN_TX_GPIO_Port GPIOD
 #define Audio_RST_Pin GPIO_PIN_4
 #define Audio_RST_GPIO_Port GPIOD
 #define OTG_FS_OverCurrent_Pin GPIO_PIN_5

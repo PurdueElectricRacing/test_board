@@ -1,6 +1,8 @@
-
-*.json
-*.sqlite
-*.db
-*.opendb
-.vs/test_board/v15/.suo
+*
+!Inc/
+!Inc/*
+!Src/
+!Src/*
+!.gitignore
+!*.ioc
+.cproject
