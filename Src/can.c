@@ -6,6 +6,10 @@
  */
 #include "can.h"
 
+#define ID_MODE 0x610
+#define ID_VOLT 0x605
+int mode = 0;
+
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 {
 	CanRxMsgTypeDef rx;
@@ -118,23 +122,52 @@ void taskRXCANProcess()
 			//check what kind of message we received
 			switch (rx.StdId)
 			{
-			case ID_BLANK:
-				//process
-				break;
-			default:
-				break;
+				case ID_MODE:
+					process(&rx);
+					break;
+				default:
+					break;
 			}
 		}
 	}
 }
 
 void task_main() {
-
+	uint8_t  i = 0;
 	while (1) {
 		HAL_GPIO_TogglePin(LD6_GPIO_Port, LD6_Pin);
-
+		if (i > 100) {
+			i = 0;
+		}
+		if (mode == 3) {
+			CanTxMsgTypeDef tx;
+			tx.IDE = CAN_ID_STD;
+			tx.StdId = ID_VOLT;
+			tx.DLC = 1;
+			tx.RTR = CAN_RTR_DATA;
+			tx.Data[0] = i++;
+			xQueueSendToFront(car.q_tx_dcan, &tx, 100); //higher priority than polling
+			HAL_GPIO_TogglePin(LD5_GPIO_Port, LD5_Pin);
+		}
 		//main loop
 
 		vTaskDelay(500);
 	}
+}
+
+void process(CanRxMsgTypeDef* rx) {
+	if (rx->Data[0] == 0x01) {
+		//log
+		return;
+	}
+	if (rx->Data[1] == 0x01) {
+		//del
+		return;
+	}
+	if (rx->Data[2] == 0x01) {
+		//live
+		mode = 3;
+		return;
+	}
+	//idle
 }

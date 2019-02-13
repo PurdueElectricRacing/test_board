@@ -1,0 +1,6 @@
+
+*.json
+*.sqlite
+*.db
+*.opendb
+.vs/test_board/v15/.suo
