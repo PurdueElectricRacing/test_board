@@ -119,5 +119,6 @@ void taskRXCANProcess()
 			switch (rx.StdId)
 			{
 			}
+		}
 	}
 }

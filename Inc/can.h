@@ -9,6 +9,9 @@
 #define CAN_H_
 
 #include "main.h"
+#include "FreeRTOS.h"
+#include "stm32f4xx_hal.h"
+#include "cmsis_os.h"
 
 typedef struct
 {
@@ -71,5 +74,10 @@ void taskTX_VCAN();
 
 extern CAN_HandleTypeDef hcan1;
 extern CAN_HandleTypeDef hcan2;
+
+extern QueueHandle_t			q_rx_dcan;
+extern QueueHandle_t			q_tx_dcan;
+extern QueueHandle_t			q_rx_vcan;
+extern QueueHandle_t			q_tx_vcan;
 
 #endif /* CAN_H_ */
